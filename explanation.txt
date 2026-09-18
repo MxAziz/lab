@@ -1,0 +1,860 @@
+====================================================================
+DSA LAB PROGRAM EXPLANATION (বাংলায়)
+Course: ICE-2202, Data Structure and Algorithm Sessional
+====================================================================
+
+
+####################################################################
+১. BUBBLE SORT (bubble-sort.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম (Program টা কিভাবে কাজ করে):
+--------------------------------------------------------------
+Bubble Sort হলো সবচেয়ে সহজ sorting algorithm। এর মূল আইডিয়া হলো —
+পাশাপাশি দুইটা element তুলনা করা, যদি বাম দিকেরটা ডান দিকেরটার চেয়ে
+বড় হয় তাহলে তাদের জায়গা বদলে (swap) দেওয়া। পুরো array-র উপর দিয়ে
+এভাবে একবার ঘুরে আসাকে বলে একটা "Pass"। প্রতি pass শেষে সবচেয়ে বড়
+element টা "বুদবুদের (bubble) মতো ভেসে" array-র শেষে চলে যায়। তাই
+এর নাম Bubble Sort। n সংখ্যক element থাকলে সর্বোচ্চ n-1 বার pass
+লাগে পুরো array sort করতে।
+
+এই প্রোগ্রামে একটা extra optimization আছে — swapped নামের একটা flag
+ব্যবহার করা হয়েছে। যদি কোনো একটা pass-এ একবারও swap না হয়, তার মানে
+array আগে থেকেই sorted, তাই আর বাকি pass চালানোর দরকার নেই — সাথে
+সাথে loop break করে দেওয়া হয়। এতে best case-এ (আগে থেকেই sorted
+array) সময় বাঁচে।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা (কেন এভাবে লেখা হয়েছে):
+--------------------------------------------------------------
+
+Block 1 — Input নেওয়া:
+    array-র size n আর n টা element ইউজারের কাছ থেকে নেওয়া হয়েছে।
+    এখানে variable length array (int arr[n]) ব্যবহার করা হয়েছে যাতে
+    যেকোনো size-এর array দিয়ে কাজ করা যায়, fixed size দিতে না হয়।
+
+Block 2 — Bubble Sort এর মূল দুইটা nested loop:
+    বাইরের loop (i) বোঝায় কয়টা pass হয়েছে।
+    ভিতরের loop (j) পাশাপাশি দুইটা element compare করে।
+    ভিতরের loop-এর সীমা n-1-i রাখা হয়েছে কারণ প্রতি pass শেষে
+    array-র শেষের দিকের elements already sorted হয়ে যায়, তাই
+    সেগুলো আবার compare করার দরকার নেই — এতে performance ভালো হয়।
+
+Block 3 — swap ও swapped flag:
+    arr[j] > arr[j+1] হলে swap() function দিয়ে দুইটা element-এর
+    জায়গা বদলানো হয়েছে, আর swapped = true সেট করা হয়েছে যাতে বোঝা
+    যায় এই pass-এ কিছু একটা বদলেছে।
+
+Block 4 — প্রতি pass-এর পর array print করা:
+    এটা মূলত demonstration/debugging উদ্দেশ্যে রাখা হয়েছে, যাতে লাব
+    রিপোর্টে দেখানো যায় প্রতিটা pass-এর পর array-র অবস্থা কেমন
+    দেখাচ্ছে — ধাপে ধাপে sorting কিভাবে এগোচ্ছে তা বোঝা যায়।
+
+Block 5 — early break:
+    if (!swapped) break; — যদি কোনো pass-এ swap না হয়, array আগে
+    থেকেই sorted, তাই বাকি pass গুলো না চালিয়ে loop থেকে বেরিয়ে
+    যাওয়া হয়েছে। এটা best-case efficiency বাড়ায়।
+
+Block 6 — Final sorted array print:
+    Sorting শেষে পুরো array একবার print করা হয়েছে চূড়ান্ত ফলাফল
+    দেখানোর জন্য।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+#include <iostream>          → input/output (cin, cout) ব্যবহারের জন্য library
+using namespace std;         → std:: prefix বারবার না লিখতে
+int main() {                 → প্রোগ্রামের entry point
+    int n;                   → array-র size রাখার variable
+    cin >> n;                → ইউজারের কাছ থেকে size নেওয়া
+    int arr[n];               → n সাইজের array declare
+    for (i=0;i<n;i++) cin>>arr[i];  → array-তে elements input নেওয়া
+
+    for (i=0;i<n-1;i++) {     → বাইরের loop: মোট pass সংখ্যা
+        bool swapped = false; → প্রতি pass শুরুতে flag reset করা
+        for (j=0;j<n-1-i;j++) → ভিতরের loop: adjacent element compare
+            if (arr[j] > arr[j+1]) {   → বাম element ডানেরটার চেয়ে বড় কিনা check
+                swap(arr[j], arr[j+1]); → হলে swap করা
+                swapped = true;         → flag true করা
+            }
+        // pass শেষে array print
+        if (!swapped) break;  → আর কোনো swap না হলে থেমে যাওয়া
+    }
+    // final sorted array print
+    return 0;
+}
+
+Sample I/O:
+Input:  5, elements: 5 2 9 1 5
+Output: Sorted array: 1 2 5 5 9
+
+
+####################################################################
+২. MERGE SORT (merge-sort.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Merge Sort হলো একটা "Divide and Conquer" algorithm। এর তিনটা ধাপ:
+  ১. Divide  — array কে বারবার অর্ধেক অর্ধেক ভাগ করা, যতক্ষণ না
+     প্রতিটা ভাগে মাত্র একটা করে element থাকে (একটা element এমনিতেই
+     sorted ধরা হয়)।
+  ২. Conquer — recursively প্রতিটা ছোট ভাগকে sort করা।
+  ৩. Combine — দুইটা sorted ভাগকে একসাথে merge করে একটা বড় sorted
+     array বানানো।
+
+এই algorithm-এর সবচেয়ে গুরুত্বপূর্ণ অংশ হলো merge() function, যেটা
+দুইটা আলাদা sorted অংশ (left ও right) নিয়ে একটা করে element compare
+করে ছোটটাকে আগে বসিয়ে একটা পুরোপুরি sorted array বানায়।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — merge() function:
+    এই function দুইটা adjacent sorted অংশ (left..mid এবং mid+1..right)
+    কে একত্র করে sort করে দেয়। এজন্য প্রথমে দুইটা temporary array
+    L[] ও R[] বানিয়ে সেখানে দুই অংশের data copy করা হয়। এরপর
+    দুইটা array থেকে একসাথে ছোট element গুলো বেছে বেছে মূল arr[]-এ
+    বসানো হয় (like দুইটা সাজানো তাসের স্তূপ একসাথে merge করা)।
+
+Block 2 — mergeSort() function (recursive):
+    left < right চেক করা হয়েছে যাতে অন্তত দুইটা element থাকলেই
+    ভাগ করা হয় (single element হলে এমনিতেই sorted, recursion থেমে
+    যায়— এটাই base case)। mid বের করে array-কে দুই ভাগে ভাগ করে
+    দুইটা অংশের ওপর recursively mergeSort() call করা হয়, শেষে
+    merge() দিয়ে দুই ভাগ একত্র করা হয়।
+
+Block 3 — main() function:
+    ইউজারের কাছ থেকে input নিয়ে mergeSort(arr, 0, n-1) call করে পুরো
+    array sort করানো হয়েছে, শেষে sorted array print করা হয়েছে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা (merge function):
+--------------------------------------------------------------
+int n1 = mid - left + 1;   → বাম অংশের সাইজ
+int n2 = right - mid;      → ডান অংশের সাইজ
+int L[n1], R[n2];          → দুইটা temporary array
+for(...) L[i] = arr[left+i];   → বাম অংশের data copy
+for(...) R[j] = arr[mid+1+j];  → ডান অংশের data copy
+
+int i=0, j=0, k=left;      → তিনটা pointer: L[]-এর জন্য i, R[]-এর জন্য j,
+                              মূল arr[]-এ বসানোর জন্য k
+while (i<n1 && j<n2) {     → যতক্ষণ দুই array-তেই element বাকি আছে
+    if (L[i] <= R[j]) arr[k++] = L[i++];   → ছোটটা আগে বসানো
+    else arr[k++] = R[j++];
+}
+while (i<n1) arr[k++] = L[i++];  → L[]-এ বাকি থাকা element গুলো বসানো
+while (j<n2) arr[k++] = R[j++];  → R[]-এ বাকি থাকা element গুলো বসানো
+
+লাইন বাই লাইন (mergeSort function):
+if (left < right) {                  → একের বেশি element থাকলেই ভাগ হবে
+    int mid = left + (right-left)/2; → মাঝের index (overflow-safe হিসাব)
+    mergeSort(arr, left, mid);       → বাম অর্ধেক sort
+    mergeSort(arr, mid+1, right);    → ডান অর্ধেক sort
+    merge(arr, left, mid, right);    → দুই অর্ধেক merge করা
+}
+
+Sample I/O:
+Input:  6, elements: 38 27 43 3 9 82
+Output: Sorted array: 3 9 27 38 43 82
+
+
+####################################################################
+৩. BINARY SEARCH (binary-search.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Binary Search একটা sorted array-তে খুব দ্রুত (O(log n) সময়ে) কোনো
+element খুঁজে বের করার পদ্ধতি। এর আইডিয়া হলো — পুরো array না ঘেঁটে
+প্রতিবার মাঝের element-টা দেখা, আর সেই অনুযায়ী search range অর্ধেক
+করে ফেলা:
+  - যদি মাঝের element-ই key হয় → পেয়ে গেছি।
+  - key যদি মাঝের element থেকে বড় হয় → বাম অর্ধেক বাদ দিয়ে শুধু
+    ডান অর্ধেকে খোঁজা।
+  - key যদি ছোট হয় → ডান অর্ধেক বাদ দিয়ে শুধু বাম অর্ধেকে খোঁজা।
+এভাবে প্রতিবার search space অর্ধেক হয়ে যাওয়ায় খুব বড় array-তেও
+এটা অনেক দ্রুত কাজ করে।
+
+গুরুত্বপূর্ণ শর্ত: Binary Search শুধু sorted array-তেই কাজ করে,
+তাই সার্চ করার আগে array sort করে নেওয়া হয়েছে।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — binarySearch() function:
+    low ও high দিয়ে বর্তমান search range বোঝানো হয়েছে। while
+    (low <= high) চলতে থাকে যতক্ষণ range-এ অন্তত একটা element থাকে।
+    mid বের করে key-র সাথে তুলনা করা হয় এবং range অর্ধেক করে ফেলা হয়।
+    না পেলে -1 return করা হয়।
+
+Block 2 — sort() ব্যবহার করা:
+    Binary search-এর পূর্বশর্ত হলো array sorted থাকতে হবে, তাই
+    <algorithm> লাইব্রেরির built-in sort() function দিয়ে array আগে
+    sort করে নেওয়া হয়েছে।
+
+Block 3 — main() ও ফলাফল দেখানো:
+    ইউজারের কাছ থেকে array আর key নিয়ে binarySearch() call করে
+    ফলাফল (index পাওয়া গেছে কিনা) দেখানো হয়েছে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+int low = 0, high = n-1;       → শুরুতে পুরো array-ই search range
+while (low <= high) {          → যতক্ষণ range valid
+    int mid = low + (high-low)/2;  → মাঝের index (overflow এড়াতে এভাবে লেখা)
+    if (arr[mid] == key) return mid;      → পেয়ে গেলে index return
+    else if (arr[mid] < key) low = mid+1; → key বড় হলে ডান দিকে যাওয়া
+    else high = mid - 1;                  → key ছোট হলে বাম দিকে যাওয়া
+}
+return -1;                     → পুরো range শেষ হয়ে গেলে মানে পাওয়া যায়নি
+
+sort(arr, arr+n);              → search করার আগে array sort করা আবশ্যক
+
+Sample I/O:
+Input:  6 elements: 10 20 30 40 50 60, key = 40
+Output: Element found at index 3 (sorted array).
+
+
+####################################################################
+৪. PATTERN MATCHING — KMP ALGORITHM (pattern-matching.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Knuth-Morris-Pratt (KMP) হলো একটা efficient string matching
+algorithm যেটা একটা বড় text-এর ভিতরে একটা pattern কতবার ও কোথায়
+কোথায় আছে তা O(n+m) সময়ে বের করে (n = text-এর দৈর্ঘ্য, m =
+pattern-এর দৈর্ঘ্য)। সাধারণ (naive) pattern matching-এ mismatch হলে
+আমরা text-এর pointer মাত্র এক ঘর এগিয়ে আবার শুরু থেকে match করি —
+এতে অনেক বার একই জায়গা বারবার চেক হয়ে সময় নষ্ট হয়।
+
+KMP-এর মূল trick হলো — pattern নিজের সম্পর্কে একটা তথ্য আগে থেকেই
+জেনে রাখে, তাকে বলে LPS array (Longest proper Prefix which is also
+Suffix)। mismatch হলে pattern-এর pointer পুরোপুরি শুরুতে ফিরে না গিয়ে
+LPS array দেখে বুদ্ধিমানের মতো এগিয়ে যায় — কারণ pattern-এর যেই অংশ
+আগে match হয়েছিল, তার মধ্যেই কিছু prefix/suffix মিল থাকতে পারে, যেটা
+আবার নতুন করে চেক করার দরকার নেই।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — computeLPSArray() function:
+    এই function pattern-এর জন্য LPS array বানায়। lps[i] মানে হলো
+    pattern[0..i] অংশের মধ্যে সবচেয়ে বড় proper prefix যেটা একই সাথে
+    suffix-ও। এই array পরে mismatch হলে pattern-এর pointer কতটা
+    পিছিয়ে যাবে তা ঠিক করতে ব্যবহার হয় — পুরো শুরু থেকে match করা
+    এড়ানোর জন্যই এই array আগেভাগে বানিয়ে নেওয়া হয়।
+
+Block 2 — KMPSearch() function:
+    text ও pattern-এর উপর দুইটা pointer i (text) ও j (pattern) দিয়ে
+    একসাথে এগোনো হয়। মিলে গেলে দুইটাই বাড়ে। j == m হলে বোঝা যায়
+    পুরো pattern মিলে গেছে — তাই সেই position (i-j) print করা হয়,
+    এবং lps ব্যবহার করে j-কে পিছিয়ে দেওয়া হয় যাতে overlapping match-ও
+    খুঁজে পাওয়া যায়। mismatch হলে j != 0 হলে lps[j-1] অনুযায়ী j
+    পিছিয়ে দেওয়া হয় (পুরো শুরুতে না গিয়ে), আর j == 0 হলে শুধু text-এর
+    pointer i বাড়ানো হয়।
+
+Block 3 — main() function:
+    getline() ব্যবহার করা হয়েছে cin >> এর বদলে, কারণ text/pattern-এ
+    space থাকতে পারে — cin >> শুধু space পর্যন্ত পড়ে, কিন্তু getline()
+    পুরো লাইন পড়ে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা (computeLPSArray):
+--------------------------------------------------------------
+int len = 0;         → বর্তমান পর্যন্ত সবচেয়ে বড় prefix-suffix-এর দৈর্ঘ্য
+lps[0] = 0;           → প্রথম character-এর জন্য lps সবসময় 0 (একক character-এর
+                        কোনো proper prefix/suffix থাকে না)
+int i = 1;            → দ্বিতীয় index থেকে শুরু
+while (i < m) {
+    if (pattern[i] == pattern[len]) {  → বর্তমান char আগের prefix-এর
+                                          পরের char-এর সাথে মিলছে
+        len++; lps[i] = len; i++;      → দৈর্ঘ্য বাড়িয়ে lps সেট করা
+    } else {
+        if (len != 0) len = lps[len-1]; → মিল না হলে ছোট prefix-এ ফিরে যাওয়া
+        else { lps[i] = 0; i++; }       → len ইতিমধ্যে 0 হলে lps[i]=0
+    }
+}
+
+লাইন বাই লাইন (KMPSearch):
+int i=0, j=0;                  → text ও pattern-এর pointer
+while (i < n) {
+    if (pattern[j]==text[i]) { i++; j++; }  → মিলে গেলে দুইটাই এগোয়
+    if (j == m) {                            → পুরো pattern মিলে গেলে
+        cout << "found at " << i-j;          → match-এর শুরু index দেখানো
+        j = lps[j-1];                        → overlapping match খোঁজার জন্য পিছানো
+    } else if (i<n && pattern[j]!=text[i]) { → mismatch হলে
+        if (j != 0) j = lps[j-1];            → বুদ্ধিমানের মতো পিছানো (পুরো শুরুতে না গিয়ে)
+        else i++;                            → j আগে থেকেই 0 হলে শুধু text এগোয়
+    }
+}
+
+Sample I/O:
+Input:  text = AABAACAADAABAABA, pattern = AABA
+Output: Pattern found at index 0, 9, 12
+
+
+####################################################################
+৫. QUEUE (5.queue.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Queue হলো একটা "FIFO" (First In First Out) data structure — যে
+element আগে ঢোকে, সেটাই আগে বের হয় (যেমন লাইনে দাঁড়ানো মানুষ)। এখানে
+array দিয়ে queue implement করা হয়েছে, যেখানে দুইটা index রাখা হয়:
+  - front → queue-এর সামনের element কোথায় আছে তা বোঝায়
+  - rear  → queue-এর শেষ element কোথায় আছে তা বোঝায়
+Enqueue (element যোগ করা) হলে rear একধাপ বাড়ে ও নতুন element সেখানে
+বসে। Dequeue (element বের করা) হলে front একধাপ বাড়ে অর্থাৎ front-এর
+element বাদ পড়ে যায় (আসলে delete না করে শুধু index সরানো হয়)।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Global array ও index:
+    SIZE=5 দিয়ে queue-এর ধারণক্ষমতা ঠিক করা হয়েছে, front ও rear
+    দুইটাই -1 দিয়ে শুরু করা হয়েছে, যার মানে queue শুরুতে খালি।
+
+Block 2 — Menu-driven while(true) loop:
+    ইউজারকে বারবার choice দেখিয়ে Enqueue/Dequeue/Display/Exit করতে
+    দেওয়া হয়েছে, যতক্ষণ না সে Exit বেছে নেয়। এভাবে ইন্টার‍্যাক্টিভভাবে
+    queue-এর operations demonstrate করা সহজ হয়।
+
+Block 3 — Enqueue (choice==1):
+    rear == SIZE-1 চেক করে Overflow (queue ভরে গেছে কিনা) দেখা হয়।
+    front == -1 হলে (queue প্রথমবার ব্যবহার হচ্ছে) front কে 0 বসানো
+    হয়। তারপর rear বাড়িয়ে সেখানে value বসানো হয়।
+
+Block 4 — Dequeue (choice==2):
+    front == -1 || front > rear চেক করে Underflow (queue খালি কিনা)
+    দেখা হয়। সমস্যা না থাকলে front-এর element দেখিয়ে front বাড়ানো
+    হয় — অর্থাৎ সেই element এখন থেকে queue-এর অংশ না।
+
+Block 5 — Display (choice==3):
+    front থেকে rear পর্যন্ত সব element ঘুরে print করা হয়েছে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+#define SIZE 5              → queue-এর সর্বোচ্চ ধারণক্ষমতা
+int arr[SIZE];               → queue-এর element রাখার array
+int front=-1, rear=-1;       → শুরুতে queue খালি বোঝাতে -1
+
+if (choice==1) {             → Enqueue operation
+    if (rear==SIZE-1) { ...Overflow...; continue; }  → array ভরে গেলে
+    cin >> value;
+    if (front==-1) front=0;  → প্রথম element ঢোকানোর সময় front set করা
+    arr[++rear] = value;     → rear আগে বাড়িয়ে সেখানে value বসানো
+}
+else if (choice==2) {        → Dequeue operation
+    if (front==-1 || front>rear) { ...Underflow...; continue; }
+    cout << arr[front++];    → front-এর value দেখিয়ে front এক বাড়ানো
+}
+else if (choice==3) {        → Display
+    for (i=front;i<=rear;i++) cout << arr[i];  → সব element দেখানো
+}
+else if (choice==4) break;   → Exit
+
+Sample I/O:
+১. Enqueue → 10  →  "Inserted 10 into the queue."
+২. Enqueue → 20  →  "Inserted 20 into the queue."
+৩. Display       →  "Queue elements: 10 20"
+৪. Dequeue       →  "Removed 10 from the queue."
+
+
+####################################################################
+৬. STACK (6.stack.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Stack হলো "LIFO" (Last In First Out) data structure — সবশেষে যেটা
+ঢোকে, সেটাই আগে বের হয় (যেমন থালার স্তূপ, উপর থেকে থালা তোলা হয়)।
+এখানে একটা class ব্যবহার করে (OOP পদ্ধতিতে) stack বানানো হয়েছে,
+যেখানে শুধু একটা index — top — রাখা হয়, যেটা সবসময় stack-এর সবচেয়ে
+উপরের element-এর অবস্থান বোঝায়। Push করলে top বাড়ে ও নতুন element
+সেখানে বসে, Pop করলে top-এর element রিটার্ন করে top কমানো হয়।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Stack class:
+    array আর top variable-কে class-এর ভিতরে private রাখা হয়েছে,
+    আর push/pop/peek/display/isEmpty/isFull-কে public method বানানো
+    হয়েছে। এভাবে data encapsulate করা হয়েছে — বাইরে থেকে সরাসরি
+    array বা top বদলানো যাবে না, শুধু নির্ধারিত method দিয়েই stack-এর
+    সাথে interact করা যাবে। এটা OOP-এর একটা ভালো practice।
+
+Block 2 — Constructor Stack():
+    object তৈরি হওয়ার সাথে সাথে top = -1 সেট করা হয়েছে, অর্থাৎ
+    শুরুতে stack খালি।
+
+Block 3 — isEmpty() ও isFull():
+    push/pop করার আগে stack খালি নাকি ভরা তা যাচাই করার জন্য এই দুইটা
+    helper function বানানো হয়েছে — এতে push/pop function-গুলো
+    পরিষ্কার ও readable থাকে।
+
+Block 4 — push(), pop(), peek(), display():
+    push এ isFull() চেক করে overflow আটকানো হয়েছে, top বাড়িয়ে value
+    বসানো হয়েছে। pop-এ isEmpty() চেক করে underflow আটকানো হয়েছে,
+    top-এর value রিটার্ন দেখিয়ে top কমানো হয়েছে। peek() শুধু top-এর
+    value দেখায়, কিছু বাদ দেয় না। display() top থেকে 0 পর্যন্ত (অর্থাৎ
+    উপর থেকে নিচে) সব element দেখায় — কারণ stack-এ সবার আগে উপরেরটাই
+    দেখা স্বাভাবিক।
+
+Block 5 — main() ও menu:
+    do-while loop দিয়ে বারবার মেনু দেখানো হয়েছে, switch-case দিয়ে
+    ইউজারের choice অনুযায়ী সংশ্লিষ্ট method call করা হয়েছে। do-while
+    ব্যবহারের কারণ — মেনু অন্তত একবার তো দেখাতেই হবে, তারপর choice
+    অনুযায়ী চলতে থাকবে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+class Stack {
+    int arr[MAX];  int top;      → element রাখার array আর top pointer
+public:
+    Stack() { top = -1; }        → constructor: শুরুতে stack খালি
+
+    bool isEmpty(){return top==-1;}   → top -1 মানে কোনো element নেই
+    bool isFull(){return top==MAX-1;} → top সর্বোচ্চ index-এ পৌঁছালে ভরা
+
+    void push(int value) {
+        if (isFull()) { ...Overflow...; return; }
+        arr[++top] = value;      → top আগে বাড়িয়ে সেখানে value বসানো
+    }
+    void pop() {
+        if (isEmpty()) { ...Underflow...; return; }
+        cout << arr[top--];      → top-এর value দেখিয়ে top কমানো
+    }
+    void peek() { cout << arr[top]; }  → শুধু দেখা, কিছু মুছে না
+    void display() {
+        for (i=top;i>=0;i--) cout << arr[i];  → উপর থেকে নিচে সব দেখানো
+    }
+};
+
+int main() {
+    Stack s;                     → object তৈরি (constructor স্বয়ংক্রিয়ভাবে কল হয়)
+    do {
+        ...menu দেখানো...
+        switch(choice) {
+            case 1: s.push(value); break;
+            case 2: s.pop(); break;
+            ...
+        }
+    } while (choice != 5);
+}
+
+Sample I/O:
+Push 10 → "10 pushed to stack."
+Push 20 → "20 pushed to stack."
+Display → "Stack elements: 20 10"
+Pop     → "20 popped from stack."
+
+
+####################################################################
+৭. N-QUEENS PROBLEM (7.nqueens.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+N-Queens সমস্যা হলো — N x N একটা দাবার বোর্ডে N টা রানী (Queen) এমনভাবে
+বসাতে হবে যেন কোনো দুইটা রানী একে অপরকে আক্রমণ করতে না পারে (একই row,
+একই column, বা একই diagonal-এ দুইটা রানী থাকতে পারবে না)।
+
+এই প্রোগ্রামে Backtracking পদ্ধতি ব্যবহার করা হয়েছে — একটা row-তে
+একটা করে queen বসানোর চেষ্টা করা হয়, যদি নিরাপদ জায়গা পাওয়া যায় তাহলে
+পরের row-তে যাওয়া হয়। যদি কোনো row-তে কোনো নিরাপদ column না পাওয়া যায়,
+তাহলে আগের row-এ ফিরে গিয়ে (backtrack) সেখানকার queen-এর জায়গা বদলানো
+হয়। এভাবে সব সম্ভাব্য valid বিন্যাস (solution) খুঁজে বের করা হয়।
+
+যেহেতু প্রতি row-তে একটাই queen থাকবে, board[row] দিয়ে সেই row-এর
+queen কোন column-এ আছে তা রাখা হয়েছে — এতে পুরো 2D বোর্ড না রেখেই
+কাজ চালানো যায়।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Global variables:
+    board[] array-এ প্রতিটা row-তে queen কোন column-এ বসানো আছে তা
+    রাখা হয়েছে। n হলো board-এর সাইজ, solutionCount দিয়ে মোট কয়টা
+    সমাধান পাওয়া গেছে তা গোনা হয়েছে।
+
+Block 2 — isSafe() function:
+    নতুন queen একটা (row, col)-এ বসানো safe কিনা তা আগের সব row-এর
+    সাথে তুলনা করে যাচাই করা হয়। same column চেক করা হয় board[i]==col
+    দিয়ে, আর diagonal চেক করা হয় abs(board[i]-col) == abs(i-row)
+    দিয়ে — কারণ একই diagonal-এ থাকা দুইটা point-এর row ও column-এর
+    পার্থক্য সমান হয়।
+
+Block 3 — solveNQueens() (backtracking function):
+    row == n হলে বোঝা যায় সবগুলো row-তে সফলভাবে queen বসানো হয়ে গেছে,
+    তাই এটা একটা valid solution — printSolution() call করা হয়। নাহলে
+    প্রতিটা column চেষ্টা করে দেখা হয়, isSafe() হলে সেখানে queen
+    বসিয়ে পরের row-এর জন্য recursive call করা হয়। বিশেষভাবে লক্ষ্যণীয় —
+    এখানে explicit backtrack (queen সরানোর) কোনো কোড নেই, কারণ পরের
+    বার loop-এ board[row] নতুন column দিয়ে overwrite হয়ে যায়, তাই
+    আলাদা করে মুছার দরকার হয় না।
+
+Block 4 — printSolution():
+    board[] অনুযায়ী পুরো N x N গ্রিড print করা হয়েছে, যেখানে Q দিয়ে
+    queen-এর অবস্থান আর . দিয়ে খালি ঘর দেখানো হয়েছে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+bool isSafe(int row, int col) {
+    for (i=0;i<row;i++) {
+        if (board[i]==col ||                     → একই column-এ আগে queen আছে কি
+            abs(board[i]-col)==abs(i-row))        → একই diagonal-এ আগে queen আছে কি
+            return false;
+    }
+    return true;
+}
+
+void solveNQueens(int row) {
+    if (row == n) { printSolution(); return; }   → সব row-তে queen বসানো শেষ = সমাধান
+    for (col=0; col<n; col++) {
+        if (isSafe(row,col)) {
+            board[row] = col;        → এই column-এ queen বসানো (চেষ্টা)
+            solveNQueens(row+1);     → পরের row-এর জন্য recursively চেষ্টা
+            // এখানে board[row] রিসেট করার দরকার নেই,
+            // কারণ loop-এর পরের ধাপে এটা নতুন col দিয়ে overwrite হবে
+        }
+    }
+}
+
+Sample I/O:
+Input:  N = 4
+Output: ২টা সমাধান পাওয়া যায় (4-Queens সমস্যার জন্য এটাই স্বাভাবিক)
+
+
+####################################################################
+৮. QUICK SORT (8.quick-sort.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Quick Sort-ও Merge Sort-এর মতো Divide and Conquer পদ্ধতি, কিন্তু
+এখানে ভাগ করার পদ্ধতি ভিন্ন। এখানে একটা element কে "pivot" হিসেবে
+বেছে নেওয়া হয় (সাধারণত শেষের element), তারপর array-কে এমনভাবে সাজানো
+হয় যাতে pivot-এর চেয়ে ছোট সব element pivot-এর বামে যায়, আর বড় সব
+element ডানে যায়। এই কাজটাকে বলে "partitioning"। partition-এর পর
+pivot তার সঠিক (final sorted) জায়গায় চলে যায়। তারপর বাম আর ডান দুই
+অংশে আলাদাভাবে recursively একই কাজ করা হয়।
+
+এই প্রোগ্রামে quick sort দিয়ে array sort করার পর, sort হয়ে যাওয়া
+array-তে একটা নির্দিষ্ট element linear search দিয়ে খোঁজা হয়েছে
+(প্রশ্নে বলা "quick sort ব্যবহার করে element খোঁজা" — sort করে তারপর
+search)।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — partition() function:
+    শেষের element-কে pivot ধরা হয়েছে। i variable দিয়ে "ছোট
+    element-দের শেষ সীমানা" ট্র্যাক করা হয়। j দিয়ে পুরো range ঘুরে
+    যেকোনো element pivot-এর চেয়ে ছোট পেলে i বাড়িয়ে সেই সাথে swap করা
+    হয়। লুপ শেষে pivot-কে তার সঠিক জায়গায় (i+1) বসিয়ে সেই index
+    return করা হয়।
+
+Block 2 — quickSort() function (recursive):
+    low < high চেক করে অন্তত দুইটা element থাকলেই partition করা হয়।
+    partition থেকে পাওয়া pivot-এর index (pi) দিয়ে array-কে দুই ভাগে
+    ভাগ করে বাম আর ডান অংশে recursively quickSort() call করা হয়।
+
+Block 3 — linearSearch() function:
+    sort হওয়ার পর array-এ key element টা linear ভাবে খুঁজে তার index
+    return করা হয়েছে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];      → শেষ element-কে pivot ধরা
+    int i = low - 1;            → ছোট element-দের সীমানা, শুরুতে কিছু নেই
+    for (j=low; j<high; j++) {
+        if (arr[j] < pivot) {   → pivot-এর চেয়ে ছোট পেলে
+            i++;
+            swap(arr[i], arr[j]);  → সেটাকে বাম দিকে নিয়ে আসা
+        }
+    }
+    swap(arr[i+1], arr[high]);  → pivot-কে তার সঠিক জায়গায় বসানো
+    return i + 1;                → pivot-এর নতুন index return
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);  → partition করে pivot-এর position পাওয়া
+        quickSort(arr, low, pi - 1);          → বাম অংশ sort
+        quickSort(arr, pi + 1, high);         → ডান অংশ sort
+    }
+}
+
+Sample I/O:
+Input:  6 elements: 10 7 8 9 1 5, key = 8
+Output: Sorted array: 1 5 7 8 9 10
+        Element found at index 3
+
+
+####################################################################
+৯. SUM OF SUBSET PROBLEM (9.sum-subset.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Sum of Subset সমস্যায় একটা set S ও একটা target sum d দেওয়া থাকে;
+কাজ হলো S-এর এমন সব subset (উপসেট) বের করা যাদের element-গুলোর যোগফল
+ঠিক d-এর সমান। এখানে S = {5,10,12,13,15,18}, d = 30।
+
+এই প্রোগ্রামে Backtracking পদ্ধতি ব্যবহার করা হয়েছে — প্রতিটা
+element-এর জন্য দুইটা সিদ্ধান্ত নেওয়া হয়: হয় সেটাকে subset-এ include
+করা, নাহলে exclude করা (এটাকে বলে "include/exclude" বা "state-space
+tree" পদ্ধতি)। প্রতিটা সিদ্ধান্তের পর check করা হয়:
+  - currentSum == d হলে → সমাধান পাওয়া গেছে
+  - currentSum ইতিমধ্যে d-এর চেয়ে বেশি হয়ে গেলে, বা বাকি সব
+    element যোগ করলেও d-তে পৌঁছানো সম্ভব না হলে → এই পথ আর না
+    এগিয়ে backtrack করা (pruning) — এতে অপ্রয়োজনীয় recursion কমে
+    algorithm efficient হয়।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Global array S[] ও subset[]:
+    S[] হলো মূল set, subset[] হলো বর্তমানে যে elements নিয়ে subset
+    বানানো হচ্ছে তা সাময়িকভাবে রাখার array।
+
+Block 2 — sumOfSubset() function-এর parameter:
+    index → এখন কোন element নিয়ে সিদ্ধান্ত নেওয়া হচ্ছে
+    currentSum → এখন পর্যন্ত subset-এ থাকা element-গুলোর যোগফল
+    remainingSum → এখনো বাকি থাকা element-গুলোর মোট যোগফল (pruning-এর জন্য দরকার)
+    d → target sum
+    k → subset[] array-এ এখন পর্যন্ত কয়টা element রাখা হয়েছে
+
+Block 3 — Base/Success condition:
+    currentSum == d হলে subset প্রিন্ট করে দেওয়া হয় — এটাই সমাধান।
+    (কোড-এ comment আছে যে return সরিয়ে দিলে আরও সমাধান খোঁজা যাবে —
+    এখানে প্রথম সমাধান পেয়ে থেমে না গিয়ে, একই branch-এর বাকি
+    সম্ভাবনাও explore করা যায়।)
+
+Block 4 — Pruning condition:
+    index == n (সব element দেখা শেষ) অথবা currentSum + remainingSum
+    < d (বাকি সব যোগ করলেও d-তে পৌঁছানো অসম্ভব) অথবা currentSum > d
+    (already বেশি হয়ে গেছে) — এই তিনটার যেকোনো একটা হলে এই path আর
+    এগোনো অর্থহীন, তাই ফিরে আসা হয়। এটাই backtracking-এর মূল শক্তি —
+    অসম্ভব path আগেভাগেই বাদ দেওয়া (branch and bound এর মতো)।
+
+Block 5 — Include/Exclude recursive calls:
+    প্রথমে S[index] কে subset-এ include করে recursive call, তারপর
+    exclude করে আরেকটা recursive call — এতে দুই রকম সম্ভাবনাই
+    explore করা হয়।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+void sumOfSubset(int index, int currentSum, int remainingSum, int d, int k) {
+    if (currentSum == d) {            → target sum-এ পৌঁছে গেছে
+        solutionFound = true;
+        printSubset(k);               → বর্তমান subset প্রিন্ট
+        return;
+    }
+    if (index==n || currentSum+remainingSum<d || currentSum>d)
+        return;                       → অসম্ভব path হলে ফিরে যাওয়া (pruning)
+
+    subset[k] = S[index];             → বর্তমান element include করা
+    sumOfSubset(index+1, currentSum+S[index], remainingSum-S[index], d, k+1);
+
+    sumOfSubset(index+1, currentSum, remainingSum-S[index], d, k);
+                                        → বর্তমান element exclude করা
+}
+
+Sample I/O:
+Set S = {5,10,12,13,15,18}, d = 30
+Output: {5,12,13}, {12,18}, {5,10,15} — এই তিনটা subset পাওয়া যায়
+
+
+####################################################################
+১০. 0/1 KNAPSACK PROBLEM (10.knapsack.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+0/1 Knapsack সমস্যায় কিছু জিনিস দেওয়া থাকে, প্রতিটার একটা profit (মূল্য)
+আর weight (ওজন) থাকে, আর একটা knapsack (ব্যাগ)-এর সর্বোচ্চ capacity
+(ধারণক্ষমতা) দেওয়া থাকে। কাজ হলো — এমনভাবে জিনিস বেছে নেওয়া (প্রতিটা
+জিনিস হয় পুরোটা নেওয়া, নাহলে একদমই না নেওয়া — তাই নাম "0/1") যাতে
+মোট weight capacity-এর মধ্যে থেকে মোট profit সর্বোচ্চ হয়।
+
+এই প্রোগ্রামে Dynamic Programming (DP) পদ্ধতি ব্যবহার করা হয়েছে।
+একটা 2D টেবিল dp[i][w] বানানো হয় যেখানে dp[i][w] মানে — প্রথম i টা
+item ব্যবহার করে w capacity-র মধ্যে সর্বোচ্চ কত profit পাওয়া সম্ভব।
+প্রতিটা item-এর জন্য দুইটা সম্ভাবনা যাচাই করা হয়:
+  - item টা না নিলে → profit হবে আগের row-এরই মান (dp[i-1][w])
+  - item টা নিলে (যদি জায়গা থাকে) → সেই item-এর profit + বাকি
+    capacity দিয়ে আগের items থেকে পাওয়া সর্বোচ্চ profit
+এই দুইটার মধ্যে যেটা বেশি, সেটাই dp[i][w]-তে রাখা হয়। এভাবে ছোট
+ছোট sub-problem-এর সমাধান আগে বের করে বড় সমাধান বানানো হয় বলেই
+একে "Dynamic Programming" বলে।
+
+এই প্রশ্নের নির্দিষ্ট মান: Profit P = (15,25,13,23), Weight
+W = (2,6,12,9), Capacity C = 20, n = 4।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Data সরাসরি বসানো:
+    এই প্রোগ্রামে সমস্যায় দেওয়া নির্দিষ্ট মানগুলো (P, W, C, n) সরাসরি
+    array-তে hardcode করা হয়েছে, যেহেতু প্রশ্নেই নির্দিষ্ট মান দেওয়া
+    আছে (n=4, P=(15,25,13,23), W=(2,6,12,9), C=20) — তাই আলাদা করে
+    ইউজারের input নেওয়ার দরকার নেই।
+
+Block 2 — DP টেবিল তৈরি:
+    dp[n+1][C+1] সাইজের একটা 2D array বানানো হয়েছে। প্রথম row/column
+    (i==0 বা w==0) মানে "কোনো item নেই" বা "capacity 0" — তাই profit
+    ০ (base case)।
+
+Block 3 — মূল DP recurrence:
+    W[i-1] <= w (অর্থাৎ এই item ব্যাগে জায়গা পাবে) হলে দুইটা
+    সম্ভাবনা compare করা হয় — item নিলে vs না নিলে — যেটা বড় সেটা
+    রাখা হয়। জায়গা না পেলে বাধ্যতামূলকভাবে item বাদ দিতে হবে, তাই
+    dp[i-1][w] copy করা হয়।
+
+Block 4 — ফলাফল প্রিন্ট:
+    dp[n][C] হলো সব item ও পুরো capacity ব্যবহার করে পাওয়া সর্বোচ্চ
+    profit — এটাই মূল উত্তর।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+int P[] = {15,25,13,23};   → প্রতিটা item-এর profit
+int W[] = {2,6,12,9};      → প্রতিটা item-এর weight
+int C = 20;                 → knapsack-এর capacity
+int dp[n+1][C+1];           → DP টেবিল: (item সংখ্যা+1) x (capacity+1)
+
+for (i=0;i<=n;i++) {
+    for (w=0;w<=C;w++) {
+        if (i==0 || w==0) dp[i][w]=0;      → base case: item নেই বা capacity নেই
+        else if (W[i-1] <= w) {             → বর্তমান item ব্যাগে ধরবে কিনা
+            int include = P[i-1] + dp[i-1][w-W[i-1]];  → নিলে কত profit
+            int exclude = dp[i-1][w];                  → না নিলে কত profit
+            dp[i][w] = max(include, exclude);          → বড়টা রাখা
+        } else {
+            dp[i][w] = dp[i-1][w];          → জায়গা না থাকলে বাধ্য হয়ে বাদ
+        }
+    }
+}
+cout << dp[n][C];   → চূড়ান্ত সর্বোচ্চ profit
+
+Sample I/O:
+Input (নির্দিষ্ট): P=(15,25,13,23), W=(2,6,12,9), C=20
+Output: Maximum profit that can be obtained: 63
+
+
+####################################################################
+১১. TOWER OF HANOI (11.tower-hanoi.cpp)
+####################################################################
+
+--------------------------------------------------------------
+মেকানিজম:
+--------------------------------------------------------------
+Tower of Hanoi একটা classic recursion সমস্যা। তিনটা rod (A, B, C)
+থাকে; A rod-এ N টা ডিস্ক ছোট থেকে বড় ক্রমে সাজানো থাকে (সবচেয়ে ছোটটা
+উপরে)। লক্ষ্য হলো — সবগুলো ডিস্ক A থেকে C rod-এ স্থানান্তর করা, B
+rod-কে সহায়ক হিসেবে ব্যবহার করে, নিচের নিয়মগুলো মেনে:
+  ১. একবারে একটামাত্র ডিস্ক সরানো যাবে।
+  ২. কোনো বড় ডিস্ক কখনও ছোট ডিস্কের উপরে বসানো যাবে না।
+
+এই সমস্যার recursive সমাধানের মূল আইডিয়া (৩টা ধাপ):
+  ১. উপরের (n-1) টা ডিস্ক A থেকে B rod-এ সরানো (C-কে সহায়ক ধরে)।
+  ২. সবচেয়ে বড় (n তম) ডিস্কটা সরাসরি A থেকে C rod-এ সরানো।
+  ৩. B rod-এ থাকা (n-1) টা ডিস্ক এখন B থেকে C rod-এ সরানো (A-কে
+     সহায়ক ধরে)।
+এই তিনটা ধাপের প্রথম ও তৃতীয়টাই আবার একই সমস্যার ছোট সংস্করণ, তাই
+recursion দিয়ে সমাধান করা হয়েছে। মোট চাল (moves) লাগে 2^n - 1 টা।
+
+--------------------------------------------------------------
+ব্লক-ভিত্তিক ব্যাখ্যা:
+--------------------------------------------------------------
+
+Block 1 — Base case:
+    if (n == 0) return; — কোনো ডিস্ক না থাকলে করার কিছু নেই, তাই
+    recursion এখানে থেমে যায়। এটা ছাড়া recursion infinite loop-এ
+    চলে যেত।
+
+Block 2 — প্রথম recursive call:
+    towerOfHanoi(n-1, from_rod, aux_rod, to_rod); — উপরের n-1 টা
+    ডিস্ককে from_rod থেকে aux_rod-এ সরানো হয় (এখানে to_rod-কে
+    সাহায্যকারী হিসেবে ব্যবহার করা হয়)। লক্ষ্য করুন — parameter-এর
+    জায়গা বদলে দিয়ে একই function দিয়ে ভিন্ন rod-এর ভূমিকা বদলানো
+    হয়েছে, এটাই এই algorithm-এর কৌশল।
+
+Block 3 — সবচেয়ে বড় ডিস্ক সরানো:
+    সরাসরি from_rod থেকে to_rod-এ n নম্বর ডিস্কটা সরানো হয় ও
+    print করে দেখানো হয়, এবং moveCount বাড়ানো হয় মোট চাল গোনার জন্য।
+
+Block 4 — দ্বিতীয় recursive call:
+    towerOfHanoi(n-1, aux_rod, to_rod, from_rod); — এবার aux_rod-এ
+    রাখা n-1 টা ডিস্ককে to_rod-এ সরানো হয়, from_rod-কে এবার
+    সাহায্যকারী হিসেবে ব্যবহার করে।
+
+--------------------------------------------------------------
+লাইন বাই লাইন ব্যাখ্যা:
+--------------------------------------------------------------
+void towerOfHanoi(int n, char from_rod, char to_rod, char aux_rod) {
+    if (n == 0) return;                      → base case: কোনো ডিস্ক নেই
+
+    towerOfHanoi(n-1, from_rod, aux_rod, to_rod);
+                                              → উপরের n-1 ডিস্ক সহায়ক rod-এ সরানো
+    moveCount++;
+    cout << "Move disk " << n << " from " << from_rod << " to " << to_rod;
+                                              → সবচেয়ে বড় ডিস্কটা সরাসরি গন্তব্যে সরানো
+
+    towerOfHanoi(n-1, aux_rod, to_rod, from_rod);
+                                              → সহায়ক rod-এর n-1 ডিস্ক গন্তব্যে সরানো
+}
+
+int main() {
+    towerOfHanoi(n, 'A', 'C', 'B');   → A থেকে C-তে সরাতে হবে, B সহায়ক
+}
+
+Sample I/O:
+Input:  n = 3 disks
+Output: ৭টা move দেখানো হয় (2^3 - 1 = 7), শেষে "Total moves: 7"
+
+
+====================================================================
+সংক্ষিপ্ত সারাংশ (Summary Table)
+====================================================================
+১.  Bubble Sort        → Adjacent swap ভিত্তিক sorting, O(n²)
+২.  Merge Sort         → Divide & Conquer sorting, O(n log n)
+৩.  Binary Search      → Sorted array-তে অর্ধেক করে খোঁজা, O(log n)
+৪.  KMP Pattern Match  → LPS array ব্যবহার করে efficient string matching, O(n+m)
+৫.  Queue              → FIFO data structure (array ভিত্তিক)
+৬.  Stack              → LIFO data structure (class/OOP ভিত্তিক)
+৭.  N-Queens           → Backtracking দিয়ে constraint satisfaction সমস্যা সমাধান
+৮.  Quick Sort         → Pivot ভিত্তিক partition করে sorting, average O(n log n)
+৯.  Sum of Subset      → Include/Exclude backtracking + pruning
+১০. 0/1 Knapsack       → Dynamic Programming (2D table), optimal substructure
+১১. Tower of Hanoi     → Classic recursion, 2^n - 1 moves প্রয়োজন
+====================================================================
