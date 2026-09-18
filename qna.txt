@@ -1,0 +1,788 @@
+■■■ ১. BUBBLE SORT ■■■
+
+১. Bubble Sort কী?
+উ. পাশাপাশি element compare করে বড়টাকে পিছনে ঠেলে sort করার algorithm।
+
+২. Bubble Sort এর time complexity কত?
+উ. Worst/Average case O(n²), Best case O(n)।
+
+৩. Bubble Sort এর space complexity কত?
+উ. O(1)।
+
+৪. Bubble Sort stable sort কিনা?
+উ. হ্যাঁ, stable।
+
+৫. কয়টা pass লাগে n element sort করতে?
+উ. সর্বোচ্চ n-1 pass।
+
+৬. প্রতি pass এ কী হয়?
+উ. সবচেয়ে বড় element শেষে চলে যায়।
+
+৭. Bubble sort এ optimization কিভাবে করা যায়?
+উ. swapped flag ব্যবহার করে, কোনো swap না হলে early break করে।
+
+৮. Best case কখন হয়?
+উ. array আগে থেকেই sorted থাকলে।
+
+৯. Bubble sort in-place algorithm কিনা?
+উ. হ্যাঁ।
+
+১০. কেন এটাকে "bubble" sort বলা হয়?
+উ. বড় element bubble এর মতো ভেসে শেষে যায় বলে।
+
+১১. Bubble sort কোথায় ব্যবহার করা ভালো?
+উ. ছোট বা প্রায় sorted dataset এ।
+
+১২. Bubble sort এ কয়টা loop থাকে?
+উ. দুইটা (nested loop)।
+
+১৩. ভিতরের loop এর range কেন কমে যায়?
+উ. কারণ শেষের elements আগেই sorted হয়ে যায়।
+
+১৪. Bubble sort recursive ভাবে লেখা যায় কি?
+উ. হ্যাঁ, লেখা যায়।
+
+১৫. Bubble Sort এর worst case কখন হয়?
+উ. array reverse sorted থাকলে।
+
+১৬. array={5,1,4,2,8} এর প্রথম pass এর পর কী হবে?
+উ. {1,4,2,5,8}।
+
+১৭. Bubble sort কোন ধরনের algorithm?
+উ. Comparison-based sorting।
+
+১৮. একে কি "Sinking sort" ও বলে?
+উ. হ্যাঁ, মাঝে মাঝে বলা হয়।
+
+১৯. Bubble sort এ worst case কয়টা comparison লাগে?
+উ. n(n-1)/2 টা।
+
+২০. Bubble Sort কি external sorting এর জন্য উপযুক্ত?
+উ. না, সাধারণত internal sorting এ ব্যবহৃত হয়।
+
+২১. Bubble sort কি linked list এ প্রয়োগ করা যায়?
+উ. হ্যাঁ, করা যায়।
+
+২২. Bubble Sort কে কি "Exchange Sort" ও বলা হয়?
+উ. হ্যাঁ।
+
+২৩. Swap operation এ কয়টা extra variable লাগে (manual swap এ)?
+উ. একটা temp variable।
+
+২৪. আগে থেকে sorted array তে bubble sort এর complexity কত?
+উ. O(n)।
+
+২৫. Bubble sort এ কয়টা array ব্যবহার হয়?
+উ. একটাই, কোনো extra array লাগে না।
+
+
+■■■ ২. MERGE SORT ■■■
+
+২৬. Merge sort কোন কৌশলে কাজ করে?
+উ. Divide and Conquer।
+
+২৭. Merge sort এর time complexity?
+উ. সবসময় O(n log n)।
+
+২৮. Merge sort এর space complexity?
+উ. O(n)।
+
+২৯. Merge sort stable কিনা?
+উ. হ্যাঁ।
+
+৩০. Merge sort এর তিনটা ধাপ কী কী?
+উ. Divide, Conquer, Combine।
+
+৩১. Merge sort এ কোন function গুরুত্বপূর্ণ?
+উ. merge() function।
+
+৩২. Merge sort এ base case কী?
+উ. একটা element এর array (এমনিতেই sorted)।
+
+৩৩. Merge sort in-place algorithm কিনা?
+উ. না, extra array লাগে।
+
+৩৪. Merge sort recursive না iterative?
+উ. সাধারণত recursive লেখা হয়।
+
+৩৫. Merge function কী করে?
+উ. দুইটা sorted অংশকে একত্র করে sort করে।
+
+৩৬. Merge sort এর worst ও best case complexity একই কেন?
+উ. কারণ সবসময় array অর্ধেক ভাগ হয়, data এর উপর নির্ভর করে না।
+
+৩৭. Merge sort বড় dataset এর জন্য উপযুক্ত কেন?
+উ. guaranteed O(n log n) সময় লাগে।
+
+৩৮. Merge sort external sorting এ ব্যবহার হয় কেন?
+উ. sequential access প্রয়োজন হয় বলে।
+
+৩৯. Merge sort এ mid কিভাবে বের করা হয়?
+উ. mid = left + (right-left)/2।
+
+৪০. mid এভাবে বের করার কারণ কী?
+উ. integer overflow এড়ানোর জন্য।
+
+৪১. Merge sort linked list এ efficient কেন?
+উ. extra space কম লাগে, sequential access সহজ।
+
+৪২. Merge sort এর recurrence relation কী?
+উ. T(n) = 2T(n/2) + O(n)।
+
+৪৩. merge() function এ কয়টা temporary array লাগে?
+উ. দুইটা (L[] এবং R[])।
+
+৪৪. Merge sort কি parallel processing এ ব্যবহার করা যায়?
+উ. হ্যাঁ, সহজে parallelize করা যায়।
+
+৪৫. Quick sort ও Merge sort এর মূল পার্থক্য কী?
+উ. Merge sort stable ও guaranteed O(n log n), Quick sort in-place কিন্তু worst case O(n²)।
+
+৪৬. Merge sort এ recursion tree এ কয়টা level থাকে?
+উ. log n লেভেল।
+
+৪৭. Merge sort এ প্রতি level এ মোট কাজ কত?
+উ. O(n)।
+
+৪৮. Merge sort কেন comparison-based sorting?
+উ. কারণ element compare করেই sort হয়।
+
+৪৯. Divide and Conquer এর আরেকটা উদাহরণ কী?
+উ. Quick sort, Binary search।
+
+৫০. array={38,27,43,3,9,82} এ প্রথম বিভাজনে কী হয়?
+উ. দুই ভাগে ভাগ হয়: {38,27,43} এবং {3,9,82}।
+
+
+■■■ ৩. BINARY SEARCH ■■■
+
+৫১. Binary search কী?
+উ. Sorted array তে middle element দেখে অর্ধেক অর্ধেক করে খোঁজার পদ্ধতি।
+
+৫২. Binary search এর time complexity?
+উ. O(log n)।
+
+৫৩. Binary search এর precondition কী?
+উ. array sorted থাকতে হবে।
+
+৫৪. Binary search এর space complexity (iterative)?
+উ. O(1)।
+
+৫৫. Binary search এর space complexity (recursive)?
+উ. O(log n) (call stack এর জন্য)।
+
+৫৬. Binary search এ mid কিভাবে বের হয়?
+উ. mid = low + (high-low)/2।
+
+৫৭. key < arr[mid] হলে কী করতে হয়?
+উ. high = mid - 1।
+
+৫৮. key > arr[mid] হলে কী করতে হয়?
+উ. low = mid + 1।
+
+৫৯. Binary search কবে "not found" রিটার্ন করে?
+উ. low > high হয়ে গেলে।
+
+৬০. Binary search linear search এর চেয়ে কেন দ্রুত?
+উ. প্রতিবার search space অর্ধেক হয়ে যায়।
+
+৬১. Binary search unsorted array তে কাজ করে কিনা?
+উ. না।
+
+৬২. Binary search recursive ভাবে লেখা যায় কি?
+উ. হ্যাঁ।
+
+৬৩. n=16 হলে worst case এ কয়টা comparison লাগে?
+উ. log2(16) = 4 টা।
+
+৬৪. Duplicate value থাকলে binary search এ কী সমস্যা হয়?
+উ. যেকোনো একটা occurrence পাওয়া যায়, নির্দিষ্ট index না-ও পেতে পারে।
+
+৬৫. Binary search এর আরেক নাম কী?
+উ. Half-interval search।
+
+৬৬. Binary search linked list এ efficient নয় কেন?
+উ. কারণ random access সম্ভব না।
+
+৬৭. Ternary search কী?
+উ. array কে তিন ভাগে ভাগ করে খোঁজার পদ্ধতি।
+
+৬৮. mid = low + (high-low)/2 লেখার কারণ কী?
+উ. (low+high)/2 এ বড় সংখ্যায় overflow হতে পারে, তাই এভাবে লেখা হয়।
+
+৬৯. Binary search কোন data structure এ সবচেয়ে বেশি ব্যবহৃত হয়?
+উ. Sorted array।
+
+৭০. Binary search এর best case complexity কত?
+উ. O(1)।
+
+
+■■■ ৪. KMP PATTERN MATCHING ■■■
+
+৭১. KMP algorithm কী?
+উ. Efficient string matching algorithm যা LPS array ব্যবহার করে।
+
+৭২. KMP এর সময় জটিলতা কত?
+উ. O(n+m)।
+
+৭৩. LPS array কী বোঝায়?
+উ. Longest Proper Prefix যেটা একই সাথে Suffix ও।
+
+৭৪. Naive pattern matching এর complexity কত?
+উ. O(n*m)।
+
+৭৫. KMP কেন naive থেকে দ্রুত?
+উ. mismatch হলে পুরো শুরুতে না গিয়ে বুদ্ধিমানের মতো এগোয়।
+
+৭৬. KMP এর পুরো নাম কী?
+উ. Knuth-Morris-Pratt।
+
+৭৭. LPS array কোথায় ব্যবহার হয়?
+উ. pattern mismatch হলে pointer কতটা পিছাবে তা ঠিক করতে।
+
+৭৮. lps[0] এর মান সবসময় কত?
+উ. 0।
+
+৭৯. KMP তে দুইটা pointer কী কী?
+উ. text এর জন্য i, pattern এর জন্য j।
+
+৮০. j==m হলে কী বোঝায়?
+উ. পুরো pattern মিলে গেছে।
+
+৮১. Mismatch হলে j কীভাবে পরিবর্তিত হয়?
+উ. j != 0 হলে j = lps[j-1]।
+
+৮২. j=0 এ mismatch হলে কী হয়?
+উ. শুধু text এর index i বাড়ে।
+
+৮৩. KMP এ preprocessing এর সময় কত লাগে?
+উ. O(m)।
+
+৮৪. KMP এ overall complexity O(n+m) কেন?
+উ. preprocessing O(m) + searching O(n)।
+
+৮৫. আরেকটা string matching algorithm এর নাম বলো।
+উ. Rabin-Karp algorithm অথবা Boyer-Moore algorithm।
+
+৮৬. KMP তে text pointer কখনো পিছায় কিনা?
+উ. না, text pointer কখনো পিছায় না।
+
+৮৭. LPS array বানাতে মূলত কয়টা variable লাগে?
+উ. len ও i।
+
+৮৮. pattern="AABA" এর lps array কী হবে?
+উ. [0,1,0,1]।
+
+৮৯. KMP এর প্রধান সুবিধা কী?
+উ. unnecessary re-comparison এড়ানো যায়।
+
+৯০. KMP কোথায় ব্যবহার হয় বাস্তব জীবনে?
+উ. Text editor এর find feature, DNA sequence matching।
+
+৯১. Overlapping pattern খোঁজার সময় কী করা হয়?
+উ. j = lps[j-1] করে আবার search চালানো হয়।
+
+৯২. KMP algorithm কে আবিষ্কার করেন?
+উ. Donald Knuth, James Morris, Vaughan Pratt।
+
+৯৩. LPS array এর maximum value কী হতে পারে?
+উ. pattern এর length - 1।
+
+৯৪. Pattern এর length 0 হলে কী হয়?
+উ. "Pattern is empty" মেসেজ দেখানো হয়।
+
+৯৫. KMP তে case sensitivity থাকে কিনা?
+উ. হ্যাঁ, ডিফল্টভাবে case-sensitive।
+
+
+■■■ ৫. QUEUE ■■■
+
+৯৬. Queue কী ধরনের data structure?
+উ. FIFO (First In First Out)।
+
+৯৭. Queue তে কোন দুইটা প্রধান operation থাকে?
+উ. Enqueue ও Dequeue।
+
+৯৮. Enqueue কী করে?
+উ. queue এর শেষে element যোগ করে।
+
+৯৯. Dequeue কী করে?
+উ. queue এর সামনে থেকে element বাদ দেয়।
+
+১০০. Queue Overflow কখন হয়?
+উ. queue পূর্ণ থাকলে নতুন element যোগ করতে গেলে।
+
+১০১. Queue Underflow কখন হয়?
+উ. queue খালি থাকলে dequeue করতে গেলে।
+
+১০২. front ও rear কী বোঝায়?
+উ. front = সামনের element, rear = শেষের element এর position।
+
+১০৩. Queue এর বাস্তব উদাহরণ কী?
+উ. লাইনে দাঁড়ানো মানুষ, printer queue।
+
+১০৪. Circular queue কী?
+উ. array এর শেষে পৌঁছালে আবার শুরুতে ফিরে যাওয়া queue।
+
+১০৫. Circular queue কেন দরকার?
+উ. array এর জায়গা পুনরায় ব্যবহারের জন্য।
+
+১০৬. Priority queue কী?
+উ. যেখানে priority অনুযায়ী element বের হয়, FIFO না মেনে।
+
+১০৭. Deque কী?
+উ. Double ended queue, দুই দিক থেকেই insert/delete করা যায়।
+
+১০৮. Queue array দিয়ে implement করলে সমস্যা কী?
+উ. fixed size, memory waste হতে পারে।
+
+১০৯. Queue linked list দিয়ে implement করলে সুবিধা কী?
+উ. dynamic size পাওয়া যায়।
+
+১১০. peek operation কী করে?
+উ. front element দেখায়, বাদ দেয় না।
+
+১১১. Enqueue/Dequeue এর time complexity কত?
+উ. O(1)।
+
+১১২. Queue কোথায় ব্যবহার হয় বাস্তবে?
+উ. CPU scheduling, BFS traversal, printer spooling।
+
+১১৩. isEmpty() কিভাবে চেক করা হয়?
+উ. front == -1 বা front > rear হলে।
+
+১১৪. isFull() কিভাবে চেক করা হয় (simple array queue তে)?
+উ. rear == SIZE-1 হলে।
+
+১১৫. BFS এ queue কেন ব্যবহার হয়?
+উ. level অনুযায়ী node visit করার জন্য FIFO দরকার হয়।
+
+
+■■■ ৬. STACK ■■■
+
+১১৬. Stack কী ধরনের data structure?
+উ. LIFO (Last In First Out)।
+
+১১৭. Stack এর প্রধান operation কী কী?
+উ. Push ও Pop।
+
+১১৮. Push কী করে?
+উ. stack এর উপরে element যোগ করে।
+
+১১৯. Pop কী করে?
+উ. stack এর উপরের element বাদ দেয়।
+
+১২০. Stack Overflow কখন হয়?
+উ. stack পূর্ণ থাকলে push করতে গেলে।
+
+১২১. Stack Underflow কখন হয়?
+উ. stack খালি থাকলে pop করতে গেলে।
+
+১২২. top কী বোঝায়?
+উ. সবচেয়ে উপরের element এর position।
+
+১২৩. Stack এর বাস্তব উদাহরণ কী?
+উ. থালার স্তূপ, ব্রাউজারের back button।
+
+১২৪. Stack কোথায় ব্যবহার হয় বাস্তবে?
+উ. Function call management, expression evaluation, DFS।
+
+১২৫. peek/top operation কী করে?
+উ. উপরের element দেখায়, বাদ দেয় না।
+
+১২৬. Stack array না linked list দিয়ে ভালো implement হয়?
+উ. দুইটাই সম্ভব; linked list এ dynamic size সুবিধা পাওয়া যায়।
+
+১২৭. Stack এর সব operation এর time complexity কত?
+উ. O(1)।
+
+১২৮. Recursion এ stack কীভাবে ব্যবহার হয়?
+উ. প্রতিটা function call stack এ জমা হয় (call stack)।
+
+১২৯. Infix থেকে Postfix রূপান্তরে stack কেন লাগে?
+উ. operator priority track করতে।
+
+১৩০. Balanced parenthesis check করতে কোন data structure ব্যবহার হয়?
+উ. Stack।
+
+১৩১. isEmpty() কিভাবে চেক করা হয়?
+উ. top == -1 হলে।
+
+১৩২. isFull() কিভাবে চেক করা হয়?
+উ. top == MAX-1 হলে।
+
+১৩৩. DFS এ stack কেন ব্যবহার হয়?
+উ. সর্বশেষ visit করা node থেকে আবার শুরু করতে।
+
+১৩৪. "LIFO" এর পূর্ণরূপ কী?
+উ. Last In First Out।
+
+১৩৫. Stack কে OOP এ class দিয়ে বানানোর সুবিধা কী?
+উ. Data encapsulation হয়, বাইরে থেকে সরাসরি array/top বদলানো যায় না।
+
+
+■■■ ৭. N-QUEENS PROBLEM ■■■
+
+১৩৬. N-Queens সমস্যা কী?
+উ. N x N বোর্ডে N টা queen এমনভাবে বসানো যাতে কেউ কাউকে attack না করে।
+
+১৩৭. N-Queens সমাধানে কোন পদ্ধতি ব্যবহার হয়?
+উ. Backtracking।
+
+১৩৮. Backtracking কী?
+উ. সমাধান খুঁজতে গিয়ে ভুল পথে গেলে পিছিয়ে গিয়ে অন্য পথ চেষ্টা করা।
+
+১৩৯. দুইটা queen কখন একে অপরকে attack করে?
+উ. একই row, column বা diagonal এ থাকলে।
+
+১৪০. isSafe() function কী চেক করে?
+উ. একটা position এ queen বসানো নিরাপদ কিনা।
+
+১৪১. Diagonal এ থাকা চেক করার সূত্র কী?
+উ. abs(board[i]-col) == abs(i-row)।
+
+১৪২. N=4 এর জন্য কয়টা সমাধান আছে?
+উ. ২টা।
+
+১৪৩. N=1 এর জন্য কয়টা সমাধান আছে?
+উ. ১টা।
+
+১৪৪. N=2 বা N=3 এর জন্য কয়টা সমাধান আছে?
+উ. কোনোটাই নেই (0টা)।
+
+১৪৫. board[] array তে কী রাখা হয়?
+উ. প্রতিটা row তে queen এর column position।
+
+১৪৬. N-Queens এ backtracking কোথায় হয়?
+উ. loop এর পরের iteration এ board[row] নতুন value দিয়ে overwrite হওয়ার মাধ্যমে।
+
+১৪৭. N-Queens এর worst case time complexity কত?
+উ. O(N!)।
+
+১৪৮. একই row তে একাধিক queen রাখা যায় কিনা?
+উ. না, প্রতি row তে একটাই।
+
+১৪৯. N-Queens সমস্যা কোন ধরনের সমস্যা?
+উ. Constraint Satisfaction Problem।
+
+১৫০. Backtracking algorithm এ recursion tree কেমন?
+উ. সম্ভাব্য সব option এক্সপ্লোর করে, invalid path এ আগেই থেমে যায়।
+
+১৫১. N-Queens এ pruning কীভাবে হয়?
+উ. isSafe() false হলে সেই branch আর explore করা হয় না।
+
+১৫২. N-Queens Dynamic Programming দিয়ে সমাধান করা যায় কিনা?
+উ. সাধারণত না, backtracking-ই উপযুক্ত।
+
+১৫৩. N-Queens এর আরেকটা সমাধান পদ্ধতি কী?
+উ. Branch and Bound।
+
+১৫৪. N-Queens এ সমাধান না থাকলে কী প্রিন্ট হয়?
+উ. "No solution exists" মেসেজ।
+
+১৫৫. N-Queens এ কয়টা গুরুত্বপূর্ণ global variable ব্যবহৃত হয়েছে?
+উ. board[], n, solutionCount।
+
+১৫৬. N-Queens এ recursion base case কী?
+উ. row == n।
+
+১৫৭. একই column এ queen আছে কিনা কীভাবে চেক হয়?
+উ. board[i] == col চেক করে।
+
+১৫৮. Backtracking ও Brute Force এর পার্থক্য কী?
+উ. Backtracking অসম্ভব path আগেই বাদ দেয় (pruning), Brute Force সব চেক করে।
+
+১৫৯. N-Queens সমাধানে recursion depth কত হয়?
+উ. N।
+
+১৬০. printSolution() function কী করে?
+উ. board[] অনুযায়ী N x N গ্রিড এ Q ও . দিয়ে সমাধান প্রিন্ট করে।
+
+
+■■■ ৮. QUICK SORT ■■■
+
+১৬১. Quick sort কোন কৌশলে কাজ করে?
+উ. Divide and Conquer।
+
+১৬২. Quick sort এ pivot কী?
+উ. যেই element এর ভিত্তিতে array ভাগ হয়।
+
+১৬৩. এই কোডে pivot হিসেবে কোনটা নেওয়া হয়েছে?
+উ. শেষের (last) element।
+
+১৬৪. Partition function কী করে?
+উ. pivot এর চেয়ে ছোট elements বামে, বড় elements ডানে রাখে।
+
+১৬৫. Quick sort এর average time complexity কত?
+উ. O(n log n)।
+
+১৬৬. Quick sort এর worst case time complexity কত?
+উ. O(n²)।
+
+১৬৭. Quick sort এর worst case কখন হয়?
+উ. array আগে থেকেই sorted বা reverse sorted থাকলে (bad pivot)।
+
+১৬৮. Quick sort in-place algorithm কিনা?
+উ. হ্যাঁ।
+
+১৬৯. Quick sort stable sort কিনা?
+উ. না, সাধারণত unstable।
+
+১৭০. Quick sort এর space complexity কত?
+উ. O(log n) (recursion stack এর জন্য)।
+
+১৭১. Partition এর পর pivot এর অবস্থান কী হয়?
+উ. তার সঠিক (final sorted) position এ চলে যায়।
+
+১৭২. Quick sort ও Merge sort এর মূল পার্থক্য কী?
+উ. Quick sort in-place কিন্তু worst-case খারাপ, Merge sort extra space লাগে কিন্তু সবসময় O(n log n)।
+
+১৭৩. Randomized quick sort কী?
+উ. random pivot বেছে worst case এড়ানোর কৌশল।
+
+১৭৪. Quick sort এ recursion কোথায় হয়?
+উ. partition এর পর বাম ও ডান অংশে।
+
+১৭৫. Quick sort কেন practice এ বেশি ব্যবহৃত হয়?
+উ. average case এ দ্রুত ও in-place।
+
+১৭৬. এই কোডে sort এর পর element খোঁজার জন্য কোন পদ্ধতি ব্যবহার হয়েছে?
+উ. Linear Search।
+
+১৭৭. Quick sort এ base case কী?
+উ. low >= high হলে recursion থামে।
+
+১৭৮. Partition এ 'i' variable কী বোঝায়?
+উ. ছোট elements এর শেষ সীমানা।
+
+১৭৯. Median-of-three পদ্ধতি কী?
+উ. pivot ভালোভাবে বাছাই করার একটা কৌশল।
+
+১৮০. Quick sort বড় dataset এ কেন জনপ্রিয়?
+উ. average case এ efficient ও কম মেমোরি লাগে।
+
+
+■■■ ৯. SUM OF SUBSET PROBLEM ■■■
+
+১৮১. Sum of Subset সমস্যা কী?
+উ. এমন subset খোঁজা যাদের যোগফল একটা নির্দিষ্ট target এর সমান।
+
+১৮২. এই সমস্যায় কোন পদ্ধতি ব্যবহার হয়েছে?
+উ. Backtracking (Include/Exclude)।
+
+১৮৩. S={5,10,12,13,15,18}, d=30 এর একটা সমাধান বলো।
+উ. {5,12,13}।
+
+১৮৪. Pruning condition গুলো কী কী?
+উ. currentSum > d, index == n, currentSum + remainingSum < d।
+
+১৮৫. remainingSum কেন রাখা হয়েছে?
+উ. বাকি elements যোগ করলেও target এ পৌঁছানো সম্ভব কিনা তা বোঝার জন্য।
+
+১৮৬. Include/Exclude পদ্ধতি কী?
+উ. প্রতিটা element কে নেওয়া বা না নেওয়ার দুইটা সিদ্ধান্ত এক্সপ্লোর করা।
+
+১৮৭. এই সমস্যার worst case time complexity কত?
+উ. O(2^n)।
+
+১৮৮. Sum of Subset সমস্যা কোন ধরনের সমস্যা?
+উ. NP-Complete সমস্যা।
+
+১৮৯. এই সমস্যা Dynamic Programming দিয়ে সমাধান করা যায় কিনা?
+উ. হ্যাঁ, যায়।
+
+১৯০. প্রথম সমাধান পাওয়ার পর কোড থেমে যায় কেন?
+উ. কারণ printSubset() এর পর return করা আছে।
+
+১৯১. সব সমাধান পেতে কী পরিবর্তন করতে হবে?
+উ. success condition এর পর থাকা return statement সরিয়ে দিতে হবে।
+
+১৯২. State-space tree কী?
+উ. প্রতিটা element এর জন্য include/exclude দুই শাখায় ভাগ হওয়া tree।
+
+১৯৩. Backtracking এ pruning এর সুবিধা কী?
+উ. অপ্রয়োজনীয় recursion এড়িয়ে সময় বাঁচায়।
+
+১৯৪. subset[] array কী কাজ করে?
+উ. বর্তমান subset এর elements সাময়িকভাবে রাখে।
+
+১৯৫. currentSum == d হলে কী করা হয়?
+উ. subset প্রিন্ট করা হয় ও solutionFound = true সেট করা হয়।
+
+১৯৬. এই সমস্যার আরেক নাম কী?
+উ. Subset Sum Problem।
+
+১৯৭. Subset Sum সমস্যা Knapsack এর সাথে কীভাবে সম্পর্কিত?
+উ. এটা Knapsack এরই একটা বিশেষ রূপ (profit=weight ধরলে)।
+
+১৯৮. Backtracking এ recursion tree এর গভীরতা কত হয়?
+উ. n (set এর element সংখ্যা)।
+
+১৯৯. Target sum এর সাথে কোনো subset না মিললে কী প্রিন্ট হয়?
+উ. "No subset with the given sum exists"।
+
+২০০. এই সমস্যায় duplicate subset আসতে পারে কিনা?
+উ. না, প্রতিটা subset ইউনিক combination।
+
+
+■■■ ১০. 0/1 KNAPSACK PROBLEM ■■■
+
+২০১. 0/1 Knapsack সমস্যা কী?
+উ. সীমিত capacity তে সর্বোচ্চ profit পাওয়ার জন্য item বাছাই করা।
+
+২০২. "0/1" মানে কী বোঝায়?
+উ. প্রতিটা item হয় পুরোটা নেওয়া (1) নাহলে একদমই না নেওয়া (0)।
+
+২০৩. এই সমস্যায় কোন পদ্ধতি ব্যবহার হয়েছে?
+উ. Dynamic Programming।
+
+২০৪. dp[i][w] কী বোঝায়?
+উ. প্রথম i টা item দিয়ে w capacity তে সর্বোচ্চ প্রাপ্ত profit।
+
+২০৫. Base case কী?
+উ. i==0 বা w==0 হলে dp[i][w] = 0।
+
+২০৬. এই সমস্যায় দেওয়া মান কী কী?
+উ. P=(15,25,13,23), W=(2,6,12,9), C=20, n=4।
+
+২০৭. এই সমস্যার উত্তর কত?
+উ. Maximum profit = 63।
+
+২০৮. Knapsack এর time complexity কত?
+উ. O(n*C)।
+
+২০৯. Knapsack এর space complexity কত?
+উ. O(n*C)।
+
+২১০. Recurrence relation কী?
+উ. W[i-1]<=w হলে dp[i][w]=max(P[i-1]+dp[i-1][w-W[i-1]], dp[i-1][w])।
+
+২১১. Fractional Knapsack ও 0/1 Knapsack এর পার্থক্য কী?
+উ. Fractional এ item ভাঙা যায়, 0/1 এ যায় না।
+
+২১২. Fractional Knapsack কোন পদ্ধতিতে সমাধান হয়?
+উ. Greedy পদ্ধতিতে।
+
+২১৩. 0/1 Knapsack Greedy দিয়ে সমাধান করা যায় কিনা?
+উ. না, optimal solution দেয় না।
+
+২১৪. DP তে "optimal substructure" কী বোঝায়?
+উ. বড় সমস্যার সমাধান ছোট সমস্যার সমাধান দিয়ে তৈরি হয়।
+
+২১৫. DP তে "overlapping subproblems" কী বোঝায়?
+উ. একই sub-problem বারবার আসে, তাই আগের result store করে reuse করা হয়।
+
+২১৬. Memoization ও Tabulation এর পার্থক্য কী?
+উ. Memoization top-down (recursion+cache), Tabulation bottom-up (table ভরে)।
+
+২১৭. এই কোডে কোন পদ্ধতি ব্যবহার হয়েছে?
+উ. Tabulation (bottom-up 2D array)।
+
+২১৮. W[i-1] > w হলে dp[i][w] এর মান কী হয়?
+উ. dp[i-1][w] (item নেওয়া সম্ভব না, তাই বাদ)।
+
+২১৯. Knapsack সমস্যা space optimize করা যায় কিনা?
+উ. হ্যাঁ, 1D array দিয়েও করা যায়।
+
+২২০. 0/1 Knapsack কোন complexity class এর সমস্যা?
+উ. NP-Complete (তবে pseudo-polynomial সমাধান আছে)।
+
+২২১. dp টেবিলের সাইজ কত?
+উ. (n+1) x (C+1)।
+
+২২২. Knapsack সমস্যায় profit ও weight এর ভূমিকা কী?
+উ. profit = যা maximize করতে হবে, weight = capacity এর মধ্যে থাকতে হবে।
+
+২২৩. Knapsack সমস্যার বাস্তব উদাহরণ কী?
+উ. বাজেটের মধ্যে সর্বোচ্চ লাভজনক পণ্য বাছাই করা।
+
+২২৪. dp[n][C] কী নির্দেশ করে?
+উ. সব item ও পুরো capacity ব্যবহার করে পাওয়া সর্বোচ্চ profit।
+
+২২৫. DP পদ্ধতি ব্যবহার না করলে কী সমস্যা হতো?
+উ. Brute force এ সব সম্ভাব্য subset চেক করতে হতো, O(2^n) সময় লাগত।
+
+
+■■■ ১১. TOWER OF HANOI ■■■
+
+২২৬. Tower of Hanoi সমস্যা কী?
+উ. তিনটা rod ব্যবহার করে N টা ডিস্ক এক rod থেকে আরেক rod এ সরানো, নিয়ম মেনে।
+
+২২৭. এই সমস্যার নিয়ম কী কী?
+উ. একবারে একটা ডিস্ক সরানো যাবে, বড় ডিস্ক ছোট ডিস্কের উপরে রাখা যাবে না।
+
+২২৮. N ডিস্কের জন্য সর্বনিম্ন কয়টা move লাগে?
+উ. 2^N - 1 টা।
+
+২২৯. N=3 এর জন্য কয়টা move লাগে?
+উ. 7টা।
+
+২৩০. Tower of Hanoi সমাধানে কোন পদ্ধতি ব্যবহার হয়?
+উ. Recursion।
+
+২৩১. Recursion এর base case কী?
+উ. n==0 হলে return (কোনো ডিস্ক নেই)।
+
+২৩২. প্রথম recursive call কী করে?
+উ. উপরের n-1 ডিস্ক সহায়ক rod এ সরায়।
+
+২৩৩. দ্বিতীয় recursive call কী করে?
+উ. সহায়ক rod এর n-1 ডিস্ক গন্তব্যে সরায়।
+
+২৩৪. সবচেয়ে বড় ডিস্ক কখন সরানো হয়?
+উ. দুই recursive call এর মাঝে।
+
+২৩৫. Tower of Hanoi এর time complexity কত?
+উ. O(2^n)।
+
+২৩৬. Tower of Hanoi কে "exponential" সমস্যা বলা হয় কেন?
+উ. কারণ move সংখ্যা N এর সাথে exponentially বাড়ে।
+
+২৩৭. N=64 হলে move সংখ্যা কত হবে (কিংবদন্তি অনুযায়ী)?
+উ. 2^64 - 1 (অত্যন্ত বিশাল সংখ্যা)।
+
+২৩৮. Tower of Hanoi এর recursion depth কত?
+উ. N।
+
+২৩৯. Tower of Hanoi এ কয়টা rod ব্যবহার হয়?
+উ. তিনটা (source, destination, auxiliary)।
+
+২৪০. from_rod, to_rod, aux_rod এর ভূমিকা কী?
+উ. যথাক্রমে উৎস, গন্তব্য ও সহায়ক rod নির্দেশ করে।
+
+২৪১. Tower of Hanoi Iterative ভাবে সমাধান করা যায় কিনা?
+উ. হ্যাঁ, যায়, তবে recursive পদ্ধতি সহজ।
+
+২৪২. moveCount variable এর কাজ কী?
+উ. মোট কয়টা move হয়েছে তা গোনা।
+
+২৪৩. Tower of Hanoi এর mathematical recurrence কী?
+উ. T(n) = 2T(n-1) + 1।
+
+২৪৪. Tower of Hanoi সমস্যার উৎপত্তি কোথা থেকে?
+উ. একটা কিংবদন্তি (Édouard Lucas দ্বারা ১৮৮৩ সালে জনপ্রিয় হয়)।
+
+২৪৫. Tower of Hanoi সমাধানে সবার আগে কোন ডিস্ক move হয়?
+উ. সবচেয়ে ছোট ডিস্ক (disk 1)।
+
+
+■■■ সাধারণ DSA ধারণা ■■■
+
+২৪৬. Algorithm কী?
+উ. কোনো সমস্যা সমাধানের সুনির্দিষ্ট ধাপে ধাপে পদ্ধতি।
+
+২৪৭. Time complexity ও Space complexity কী?
+উ. যথাক্রমে algorithm চালাতে কত সময় ও মেমোরি লাগে তার measure।
+
+২৪৮. Big-O notation কী বোঝায়?
+উ. Algorithm এর worst-case performance measure করার notation।
+
+২৪৯. Recursion কী?
+উ. কোনো function নিজেকে নিজে call করা।
+
+২৫০. Data Structure কী?
+উ. Data সংগঠিত ও সংরক্ষণ করার পদ্ধতি (যেমন array, stack, queue)।
+
+====================================================================
+মোট প্রশ্ন সংখ্যা: ২৫০
+====================================================================
