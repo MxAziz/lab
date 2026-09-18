@@ -3,9 +3,14 @@
 #include <string>
 using namespace std;
 
-void patternMatch(string text, string pattern) {
-    int n = text.size();
-    int m = pattern.size();
+int main() {
+    string text, pattern;
+    cout << "Enter the text: ";
+    getline(cin, text);
+    cout << "Enter the pattern to search: ";
+    getline(cin, pattern);
+
+    int n = text.length(), m = pattern.length();
     bool found = false;
 
     for (int i = 0; i <= n - m; i++) {
@@ -21,19 +26,7 @@ void patternMatch(string text, string pattern) {
     }
 
     if (!found)
-        cout << "Pattern not found in the text." << endl;
-}
-
-int main() {
-    string text, pattern;
-
-    cout << "Enter the text: ";
-    getline(cin, text);
-
-    cout << "Enter the pattern: ";
-    getline(cin, pattern);
-
-    patternMatch(text, pattern);
+        cout << "Pattern not found" << endl;
 
     return 0;
 }
