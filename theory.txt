@@ -1,0 +1,338 @@
+1. A program to sort a linear array using the Bubble Sort algorithm.
+
+Objectives:
+1. To understand the concept of sorting using the Bubble Sort algorithm.
+2. To implement the Bubble Sort algorithm in C++.
+3. To analyze the time complexity of Bubble Sort.
+
+Theory:
+Bubble Sort is a simple sorting algorithm that repeatedly traverses the list, comparing and swapping adjacent items if they are in the wrong order. This is continued until the list is sorted. The algorithm gets its name because smaller elements "bubble" to the top during each pass.
+Time Complexity:
+•    Best Case (Already Sorted): O(n)
+•    Average Case: O(n²)
+•    Worst Case (Reversely Sorted): O(n²)
+
+Algorithm:
+1.    Start with an array of size n.
+2.    Loop i from 0 to n-1.
+3.    Inside this loop, loop j from 0 to n-i-1.
+4.    Compare the adjacent elements; if the left one is bigger than the right one, swap them.
+5.    Repeat until no swaps are needed.
+6.    The array is sorted.
+
+@ Source Code
+@ Output
+
+Conclusion:
+    1. The Bubble Sort algorithm was successfully implemented in C++.
+    2. The algorithm sorts an array by repeatedly swapping adjacent elements
+
+###
+2. A program to sort a linear array using the Merge Sort algorithm.
+
+Objectives:
+1. To understand the concept of sorting using the Merge Sort algorithm.
+2. To implement the Merge Sort algorithm in C++.
+3. To analyze the time complexity of Merge Sort.
+
+Theory:
+Merge Sort is a divide-and-conquer algorithm that divides an array into two halves, recursively sorts both halves, and then merges the sorted halves back. This provides a stable and efficient sorting process.
+
+Time Complexity:
+•Best Case: O(n log n)
+•Average Case: O(n log n)
+•Worst Case: O(n log n)
+
+Algorithm:
+1.If the array contains one or zero elements, then it is already sorted.
+2.Divide the array into two halves.
+3.Recursively sort both halves.
+4. Merge the sorted halves again.
+5. Continue merging until the whole array is sorted.
+
+Output:
+Enter the number of elements: 5
+Enter the elements: 38 27 43 3 9
+Sorted array: 3 9 27 38 43
+
+Conclusion:
+    1. The Merge Sort algorithm was successfully implemented in C++.
+    2. The algorithm recursively divides the array and merges sorted halves.
+    3. Merge Sort is more efficient than Bubble Sort and works well for large datasets.
+
+
+###
+3. A program to find an element using the Binary Search algorithm.
+
+Objectives:
+    1. To understand the concept of searching using the Binary Search algorithm.
+    2. To implement the Binary Search algorithm in C++.
+    3. To study the time complexity of Binary Search.
+
+Theory:    Binary Search is a search algorithm that determines the location of a target element within a sorted array. It proceeds by continuously halving the search interval. If the target value is less than the middle element, the search proceeds in the left subarray; otherwise, it proceeds in the right subarray. This continues until the element is located or the search interval is empty.
+
+Time Complexity:
+Best Case: O(1) (Element is at the middle)
+Average Case: O(log n)
+Worst Case: O(log n)
+
+Algorithm:
+    1. Take the sorted array and the target element as parameters.
+    2. Create two pointers, low at the start and high at the end of the array.
+    3. Compute the middle index mid as (low + high) / 2.
+    4. If arr[mid] equals the target element, return mid.
+    5. If arr[mid] is greater than the target, update high = mid - 1.
+    6. If arr[mid] is smaller than the target, set low = mid + 1.
+    7. Repeat steps 3-6 until low > high.
+    8. If the element is not found, return -1.
+
+Conclusion:
+    1. The Binary Search algorithm was successfully implemented in C++.
+    2. The algorithm efficiently searches for an element by dividing the array into halves.
+    3. Binary Search is much faster than Linear Search for sorted datasets, with a time complexity of O(log n).
+
+###
+4. Program to search for a given pattern from text using the Pattern Matching algorithm.
+
+Objectives:
+1.To develop an appreciation of the definition of pattern matching for strings.
+2.To create a simple Pattern Matching algorithm in C++.
+3.To analyze the pattern matching algorithm in terms of its efficiency.
+
+Theory:
+Pattern Matching is a basic string processing operation, i.e., searching for a given fixed substring (pattern) in the input text. Naive String Matching Algorithm is the most obvious pattern matching algorithm, and it checks at every position in the text whether the pattern or not. We have other more optimized algorithms like KMP (Knuth-Morris-Pratt) and Boyer-Moore algorithms which try to optimize the search by excluding useless comparisons.
+
+Time Complexity:
+• Naive Algorithm: O(n * m), where n is the text size and m is the pattern size.
+• KMP Algorithm: O(n + m).
+• Boyer-Moore Algorithm: O(n/m) in the worst case.
+
+Algorithm (Naive Approach):
+1. Take the text and pattern as input.
+2. Retrieve the length of the text (n) and pattern (m).
+3. Loop through the text from index i = 0 to i = n-m.
+4. For each position i, match the pattern with the substring of the text.
+5. If all the characters are matched, then print the position where the pattern is encountered.
+6. If there is no match, print "Pattern not found".
+
+
+Conclusion:
+1. The Pattern Matching program was successfully implemented in C++.
+2. The Naive method examines every position of the text in order.
+3. Further sophisticated algorithms like KMP and Boyer-Moore can refine the search further.
+
+###
+5. A program to implement a Queue data structure along with its typical operations.
+
+Objectives:
+    1. To understand the concept of a queue data structure.
+    2. To implement a queue using an array in C++.
+    3. To perform basic operations such as enqueue, dequeue, and display.
+Theory:
+A queue is a linear data structure that follows the FIFO (First In, First Out) principle. Elements are inserted from the rear and removed from the front. A queue can be implemented using arrays or linked lists. Common operations include:
+    • Enqueue: Insert an element at the rear of the queue.
+    • Dequeue: Remove an element from the front of the queue.
+    • Peek: Retrieve the front element without removing it.
+    • isEmpty: Check if the queue is empty.
+    • isFull: Check if the queue is full (for array implementation).
+Time Complexity:
+    • Enqueue: O(1)
+    • Dequeue: O(1)
+    • Peek: O(1)
+    • isEmpty / isFull: O(1)
+
+Algorithm:
+    1. Initialize an empty queue with front = -1 and rear = -1.
+    2. Enqueue operation:
+        ◦ If the queue is full, display an overflow message.
+        ◦ Else, insert the element at rear and increment rear.
+    3. Dequeue operation:
+        ◦ If the queue is empty, display an underflow message.
+        ◦ Else, remove the element from front and increment front.
+    4. Display operation:
+        ◦ Print all elements from front to rear.
+
+Conclusion:
+    1. The queue data structure was successfully implemented using an array in C++.
+    2. Basic operations such as enqueue, dequeue, and display were performed without functions.
+    3. The queue follows the FIFO principle, making it suitable for scheduling tasks and handling requests.
+
+
+###
+6. A program to implement a Stack data structure along with its typical operations.
+
+Objectives:
+    1. To understand the concept of the Stack data structure.
+    2. To implement the typical operations of a stack using C++.
+    3. To understand the LIFO (Last In, First Out) principle.
+Theory:
+A Stack is a linear data structure that follows the LIFO (Last In, First Out) principle. In a stack, insertion and deletion are performed only at one end, called the TOP.
+The main operations of a stack are Push, Pop, Peek, and Display. The Push operation inserts an element into the stack, the Pop operation removes the top element, and the Peek operation displays the top element without removing it.
+Time Complexity:
+• Push Operation: O(1)
+• Pop Operation: O(1)
+• Peek Operation: O(1)
+• Display Operation: O(n)
+Algorithm:
+    1. Start.
+    2. Initialize top = -1.
+    3. For Push, check whether the stack is full. If it is not full, increment top and insert the element.
+    4. For Pop, check whether the stack is empty. If it is not empty, display and remove the top element.
+    5. For Peek, check whether the stack is empty. If not, display the top element.
+    6. For Display, print all elements from top to bottom.
+    7. Repeat the required operations.
+    8. Stop.
+
+Conclusion:
+The stack data structure was successfully implemented in C++ using the LIFO (Last In, First Out) principle. The Push, Pop, Peek, and Display operations were performed successfully.
+
+
+###
+7. A program to solve the N-Queens problem using backtracking.
+Objectives:
+1. To know the concept of backtracking.
+2. To solve the N-Queens problem using backtracking in C++.
+3. To find all the possible ways to place N queens on an N×N chessboard such that no two queens attack each other.
+Theory:
+N-Queens problem is a classic combinatorics problem that consists of placing N queens on an N×N chessboard in such a manner that no queen is capable of attacking any other. That is:
+•No two queens are permitted in the same row.
+•No two queens are permitted in the same column.
+•No two queens are permitted in the same diagonal.
+
+Backtracking Approach:
+Backtracking is the technique of trying all feasible positions by placing a queen at a time in every column and backtracking if any placement yields an invalid solution. The steps are:
+1.\tStart with the leftmost column.
+2.\tTry placing a queen in each row of the present column.
+3.\tIf there exists a safe spot, place the queen and try the next column.
+4.\tIf the placement of all queens is made, print the solution.
+5. If that leads to no solution, then backtrack to the previous column and place the queen in some other position.
+
+Algorithm:
+1. Write a function to determine if placing a queen at board[row][col] is safe.
+2. If all the queens are placed in all the columns, then display the board.
+3. Try placing a queen in each row of the current column and recursively search for a solution for the next column.
+4. If the placement of a queen results in a solution, return true. Otherwise, delete the queen (backtrack) and attempt another row.
+5. If no placement is successful, return false.
+
+Conclusion:
+    1. The N-Queens problem was successfully solved using the backtracking approach.
+    2. The algorithm explores all possibilities and backtracks when necessary to find the correct placements.
+    3. The implementation can be extended to different values of N by modifying the N constant in the program.
+
+
+###
+8. A program to find an element using a Quick Sort algorithm.
+
+Objectives:
+    1. To understand the concept of the Quick Sort algorithm.
+    2. To implement the Quick Sort algorithm in C++.
+    3. To sort an array using Quick Sort and search for a given element.
+    4. To analyze the time complexity of Quick Sort.
+
+Theory:
+Quick Sort is an efficient divide-and-conquer sorting algorithm. It selects an element as a pivot and partitions the array around the pivot. Elements smaller than the pivot are placed on the left side, and elements greater than the pivot are placed on the right side. The same process is then applied recursively to the left and right sub-arrays.
+After sorting the array, Binary Search can be used to find the required element efficiently because the array is already sorted.
+
+Time Complexity:
+• Best Case: O(n log n)
+• Average Case: O(n log n)
+• Worst Case: O(n²)
+• Binary Search: O(log n)
+• Space Complexity: O(log n) on average due to recursion.
+
+Algorithm:
+    1. Start.
+    2. Read the number of elements and the array elements.
+    3. Read the element to be searched.
+    4. Select the last element as the pivot.
+    5. Partition the array so that smaller elements are placed before the pivot and larger elements are placed after it.
+    6. Recursively apply Quick Sort to the left and right parts of the array.
+    7. After sorting, apply Binary Search to find the required element.
+    8. If the element is found, display its position.
+    9. Otherwise, display that the element is not found.
+    10. Stop.
+
+Conclusion:
+The Quick Sort algorithm was successfully implemented in C++. The given array was sorted successfully, and the required element was found using Binary Search.
+
+###
+9. A program to solve the Sum of Subset problem.
+
+Objectives:
+1. To understand the principle of backtracking in solving combinatorial problems.
+2. Solving the Sum of Subset problem without using functions.
+3. To create each potential subset whose sum is equal to a given target value, according to user input.
+Theory: The Sum of Subset problem is a traditional classic combinatorial optimization and backtracking problem. You are given a set of positive integers and a target sum d. You are supposed to find all of the subsets of the set with sums equal to d.
+Retrospective Approach:
+Backtracking is utilized to form all subsets while making sure unnecessary checks are prevented if the sum is greater than d. The operations are:
+1. Read the input set and target sum from input.
+2. Write a loop-based solution to generate subsets iteratively.
+3. If the sum of the subset is d, print the subset.
+4. Keep looking for other potential subsets.
+Algorithm:
+1. Accept the user input for the set elements and the target sum.
+2. Generate all possible subsets using a loop-based approach.
+3. If the sum of the selected subset is d, then print the subset.
+4. If the sum exceeds d, discard that subset.
+5. Repeat the procedure until all alternatives are tried.
+
+Conclusion:
+1.The Sum of Subset problem was successfully implemented without using functions.
+2. The algorithm efficiently detects all subsets summing up to the target sum.
+3. The approach is also valid for more extensive data series and different target totals via input modification.
+
+###
+10. A program to solve the 0/1 Knapsack problem using dynamic programming.
+Objectives:
+    1. To understand the concept of the 0/1 Knapsack problem in combinatorial optimization.
+    2. To implement the dynamic programming approach for solving the problem efficiently.
+    3. To determine the maximum profit achievable within the given knapsack capacity.
+Theory:
+The 0/1 Knapsack problem is a well-known problem in dynamic programming where we have a set of items, each with a weight and profit. The goal is to determine the maximum total profit that can be obtained by selecting a subset of items, ensuring that their total weight does not exceed the given capacity. Each item can either be included or excluded (hence the name 0/1 Knapsack).
+Dynamic Programming Approach:
+    1. Define the DP State: Let dp[i][w] represent the maximum profit obtained by selecting from the first i items with a knapsack capacity of w.
+    2. Recurrence Relation:
+        ◦ If we exclude item i: dp[i][w] = dp[i-1][w]
+        ◦ If we include item i: dp[i][w] = profit[i] + dp[i-1][w - weight[i]] (if weight[i] ≤ w)
+        ◦ Take the maximum of both cases:
+dp[i][w] = max(dp[i-1][w], profit[i] + dp[i-1][w - weight[i]])
+    3. Base Case: If i == 0 or w == 0, then dp[i][w] = 0.
+Algorithm:
+    1. Take input from the user for the number of items, profits, weights, and knapsack capacity.
+    2. Create a DP table dp[n+1][C+1] initialized to zero.
+    3. Fill the table using the recurrence relation.
+    4. The maximum profit is stored in dp[n][C].
+    5. Print the maximum profit.
+
+Conclusion:
+    1. The 0/1 Knapsack problem was successfully solved using dynamic programming.
+    2. The approach efficiently calculates the maximum profit within the given constraints.
+
+
+###
+11. A program to solve the Tower of Hanoi problem for the N disk.
+
+Objectives:
+    1. To understand the concept of the Tower of Hanoi problem.
+    2. To implement a recursive approach to solve the problem.
+    3. To analyze the time complexity of the Tower of Hanoi algorithm.
+Theory:
+The Tower of Hanoi is a mathematical puzzle consisting of three rods and N disks of different sizes. The puzzle starts with all the disks stacked in increasing order of size on one rod, and the goal is to move all the disks to another rod while obeying the following rules:
+    1. Only one disk can be moved at a time.
+    2. A larger disk cannot be placed on top of a smaller disk.
+    3. Only the top disk of any rod can be moved.
+The recursive approach solves the problem as follows:
+    • Move the top N-1 disks from Source to Auxiliary rod.
+    • Move the largest disk from Source to Destination rod.
+    • Move the N-1 disks from Auxiliary to Destination rod.
+Algorithm:
+    1. Take input from the user for the number of disks.
+    2. Use recursion to move N-1 disks to the auxiliary rod.
+    3. Move the largest disk to the destination rod.
+    4. Move the N-1 disks from the auxiliary rod to the destination rod.
+    5. Display the sequence of moves.
+
+Conclusion:
+    1. The Tower of Hanoi problem was successfully solved using recursion.
+    2. The problem follows an exponential time complexity of O(2^N).
+    3. The recursive approach provides an elegant and structured solution for solving the Tower of Hanoi puzzle.
