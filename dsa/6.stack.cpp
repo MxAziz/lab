@@ -1,4 +1,3 @@
-
 // 6. Implement a Stack data structure along with its typical operations
 #include <iostream>
 using namespace std;
