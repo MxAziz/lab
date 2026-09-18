@@ -1,43 +1,52 @@
+// 10. Solve 0/1 Knapsack using Dynamic Programming
+// Profit P = (15, 25, 13, 23), Weight W = (2, 6, 12, 9), Capacity C = 20, n = 4
 #include <iostream>
 using namespace std;
 
 int main() {
-    int n, C;
-    cout << "Enter the number of items: ";
-    cin >> n;
-    int profit[n], weight[n];
+    int n = 4;
+    int P[] = {15, 25, 13, 23}; // profits
+    int W[] = {2, 6, 12, 9};    // weights
+    int C = 20;                 // knapsack capacity
 
-    cout << "Enter the profits of the items: ";
-    for (int i = 0; i < n; i++) cin >> profit[i];
+    int dp[n + 1][C + 1];
 
-    cout << "Enter the weights of the items: ";
-    for (int i = 0; i < n; i++) cin >> weight[i];
-
-    cout << "Enter the knapsack capacity: ";
-    cin >> C;
-
-    int dp[n+1][C+1];
+    // Build the DP table
     for (int i = 0; i <= n; i++) {
         for (int w = 0; w <= C; w++) {
-            if (i == 0 || w == 0)
+            if (i == 0 || w == 0) {
                 dp[i][w] = 0;
-            else if (weight[i-1] <= w)
-                dp[i][w] = max(dp[i-1][w], profit[i-1] + dp[i-1][w - weight[i-1]]);
-            else
-                dp[i][w] = dp[i-1][w];
+            } else if (W[i - 1] <= w) {
+                // Either include item i-1 or exclude it, take the max
+                int include = P[i - 1] + dp[i - 1][w - W[i - 1]];
+                int exclude = dp[i - 1][w];
+                dp[i][w] = max(include, exclude);
+            } else {
+                dp[i][w] = dp[i - 1][w];
+            }
         }
     }
 
-    cout << "Maximum profit: " << dp[n][C] << endl;
-    return 0;  }
+    cout << "Profits:  ";
+    for (int i = 0; i < n; i++) cout << P[i] << " ";
+    cout << endl;
+
+    cout << "Weights:  ";
+    for (int i = 0; i < n; i++) cout << W[i] << " ";
+    cout << endl;
+
+    cout << "Capacity: " << C << endl;
+
+    cout << "\nMaximum profit that can be obtained: " << dp[n][C] << endl;
+
+    return 0;
+}
 
 /*
-Sample Input:
-Enter number of items: 3
-Enter profits of items: 60 100 120
-Enter weights of items: 10 20 30
-Enter knapsack capacity: 50
-
 Sample Output:
-Maximum profit that can be obtained: 220
+Profits:  15 25 13 23
+Weights:  2 6 12 9
+Capacity: 20
+
+Maximum profit that can be obtained: 63
 */
